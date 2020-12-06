@@ -9,14 +9,14 @@ passports_counter = 0
 
 # extract passport data per person as a single string
 with open(input_file, 'r') as file:
-    buffer_var = ""
     for line in file:
         passports_raw.append(line)
     passports_raw.append("\n")
 
+buffer_var = ""
 for row in range(len(passports_raw)):
     # new line is used to separate passports
-    if passports_raw[row] == "\n" or passports_raw[row] == "\n":
+    if passports_raw[row] == "\n":
         passports_in_strings.append(buffer_var)
         buffer_var = ""
     else:
