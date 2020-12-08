@@ -73,6 +73,22 @@ for rule in raw_data:
                  int(element[0:(element.find(" "))])))
     rules.update({bag_name:bag_tspec})
     # print(f'{bag_name}\n{bag_tspec}\n')
+can_store_shiny_gold = []
+can_store_shiny_gold.append("shiny gold")
 
-if "shiny gold" in rules:
-    print(rules["shiny gold"])
+recursion = 1
+appeareances = 0
+another_try = True
+while another_try == True:
+    another_try = False
+    for element in rules:
+        for bigger in can_store_shiny_gold:
+            for tuple_element in rules[element]:
+                if tuple_element[0] == bigger:
+                    if element not in can_store_shiny_gold:
+                        can_store_shiny_gold.append(element)
+                        # stop loop if there is no new element current run
+                        another_try = True
+                        appeareances += 1
+    recursion += 1
+print(f'Possible containers:{appeareances} - Recursions needed:{recursion}')
