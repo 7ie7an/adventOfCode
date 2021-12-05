@@ -89,5 +89,30 @@ def part1():
                 if bingo:
                     result = calcSum(val,blockList[blockId])
 
+def part2():
+    blockList = readInput()[0]
+    bingoNumbers = readInput()[1]
+    bingoBlockIds = []
+    bingo = False
+    # check inputs one after another
+    for val in bingoNumbers:
+        for blockId in range(len(blockList)):
+            # only do further crossing and checking if bingo wasn't found already
+            if not bingo:
+                # cross block and update blocklist
+                blockList[blockId] = crossBlock(blockList[blockId], val)
+                bingo = checkBlock(blockList[blockId])
+                if bingo:
+                    # check for new bingo block and save order
+                    if blockId not in bingoBlockIds:
+                        bingoBlockIds.append(blockId)
+                    bingo = False
+                    # Last bingo block reached
+                    if len(bingoBlockIds) == len(blockList):
+                        calcSum(val, blockList[blockId])
+                        return
+
+
 if __name__ == '__main__':
     part1()
+    part2()
