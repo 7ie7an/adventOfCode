@@ -54,6 +54,10 @@ def addPath(tup, matrix):
             # increase position value from tuple start til end position
             matrix[y1+counter][x1] += 1
             counter += stepY
+    elif diffY != 0 and diffX != 0:
+        vector = [stepY,stepX]
+        for i in range(abs(diffX)+1):
+            matrix[y1+i*stepY][x1+i*stepX] += 1
     else:
         print("error:", diffX, diffY)
     return matrix
@@ -62,14 +66,6 @@ def fillMatrix(matrix):
     for path in readInput():
         # recursively update matrix
         matrix = addPath(path, matrix)
-        with open("tmp.txt", "a") as fi:
-            fi.write("\n")
-            fi.write(str(path))
-            fi.write("\n")
-            for i in matrix:
-                fi.write(str(i))
-                fi.write("\n")
-
     return matrix
 
 def calcSum(matrix):
@@ -80,10 +76,10 @@ def calcSum(matrix):
                 counter += 1
     return counter
 
-def part1():
+def part2():
     matrix = getMatrix(readInput())
     matrix = fillMatrix(matrix)
     print(calcSum(matrix))
 
 if __name__ == '__main__':
-    part1()
+    part2()
