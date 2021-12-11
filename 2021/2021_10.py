@@ -1,3 +1,5 @@
+import math
+
 TEST_INPUT = "2021/test.txt"
 PUZZLE_INPUT = "2021/2021_10.txt"
 closing = [")", ">", "]", "}"]
@@ -55,16 +57,72 @@ def calcSum1(corrupts):
         elif tu[1] == ">":
             sum1 += 25137
     return(sum1)
+def completeRow(row):
+    i = len(row)-1
+    missing = []
+    while i >= 0:
+        if row[i] in opening:
+            # cover the case of the last element beeing a opening para
+            if i == len(row)-1:
+                row.append(closing[opening.index(row[i])])
+                # an opening para at the end has to be missing
+                missing.append(closing[opening.index(row[i])])
+                # reset loop
+                i = len(row)
+            # is the para before the exact same opening parantheses
+            elif row[i+1] == closing[opening.index(row[i])]:
+                # remove para pair from data because valid
+                row.pop(i+1)
+                row.pop(i)
+                # restart loop
+                i = len(row)
+            else:
+                # mismatch in programm
+                print("error")
+        elif row[i] not in closing:
+            # mismatch in programm
+            print("error")
+        # decrease loop counter
+        i -= 1
+    return missing
+
+def calcSum2(paraLists):
+    results = []
+    for li in paraLists:
+        score = 0
+        for c in li:
+            score *= 5
+            if c == ")":
+                score += 1
+            elif c == "]":
+                score += 2
+            elif c == "}":
+                score += 3
+            elif c == ">":
+                score += 4
+        results.append(score)
+    results = sorted(results)
+    return (results[math.floor(len(results)/2)])
 
 def part1():
     data = readInput(PUZZLE_INPUT)
-    corrupts = (findCorrupt(data))
+    corrupts = findCorrupt(data)
     print("Part1:", calcSum1(corrupts))
 
 
 def part2():
-    pass
-
+    data = readInput(PUZZLE_INPUT)
+    corrupts = findCorrupt(data)
+    ignoreLines = []
+    results = []
+    i = 0
+    [ignoreLines.append(n) for n,c in corrupts]
+    for row in data:
+        if i not in ignoreLines:
+            results.append(completeRow(row))
+        i += 1
+    total2 = calcSum2(results)
+    print("Part2:", total2)
 if __name__ == '__main__':
     part1()
     part2()
