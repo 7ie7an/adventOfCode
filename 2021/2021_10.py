@@ -1,5 +1,3 @@
-import math
-
 TEST_INPUT = "2021/test.txt"
 PUZZLE_INPUT = "2021/2021_10.txt"
 closing = [")", ">", "]", "}"]
@@ -102,7 +100,7 @@ def calcSum2(paraLists):
                 score += 4
         results.append(score)
     results = sorted(results)
-    return (results[math.floor(len(results)/2)])
+    return (results[int(len(results)/2)])
 
 def part1():
     data = readInput(PUZZLE_INPUT)
