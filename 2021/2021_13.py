@@ -37,6 +37,7 @@ class Transparent:
                 maxY = y
             if x > maxX:
                 maxX = x
+        # create temporary list with "#" in tuple positions
         for j in range(maxY +1):
             tmpBlock = []
             for i in range(maxX +1):
@@ -54,8 +55,10 @@ class Transparent:
             y = self.block[i][0]
             x = self.block[i][1]
             if fold[0] == "y" and y > fold[1]:
+                # replace the tuple with mirrored y axis
                 self.block[i] = (fold[1]-(y-fold[1]),x)
             elif fold[0] == "x" and x > fold[1]:
+                # replace the tuple with mirrored x axis
                 self.block[i] = (y,fold[1]-(x-fold[1]))
 
     def countDots(self):
@@ -63,19 +66,24 @@ class Transparent:
         for dot in self.block:
             if dot not in dots:
                 dots.append(dot)
-        print(len(dots))
+        return len(dots)
 
 def part1():
     p1 = Transparent()
     p1.readInput(PUZZLE_INPUT)
-    print("\n=====FOLD1=====")
     p1.fold(0)
     # p1.printBlock(" ")
-    p1.countDots()
+    print("Part1:", p1.countDots())
 
 
 def part2():
-    pass
+    p2 = Transparent()
+    p2.readInput(PUZZLE_INPUT)
+    for i in range(len(p2.foldInstructions)):
+        p2.fold(i)
+    print("Part2:")
+    p2.printBlock(" ")
+
 
 if __name__ == '__main__':
     part1()
